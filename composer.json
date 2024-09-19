@@ -1,0 +1,30 @@
+{
+    "name": "minhyung/korea-days",
+    "description": "PHP wrapper for Korea Days API",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Minhyung Park",
+            "email": "urlinee@gmail.com"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/overworks/php-korea-days/issues",
+        "source": "https://github.com/overworks/php-korea-days"
+    },
+    "require": {
+        "ext-json": "*",
+        "guzzlehttp/guzzle": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Minhyung\\KoreaDays\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true
+    }
+}
