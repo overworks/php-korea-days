@@ -17,14 +17,28 @@
         "ext-json": "*",
         "guzzlehttp/guzzle": "^7.0"
     },
+    "require-dev": {
+        "phpunit/phpunit": "^10.0|^11.0"
+    },
     "autoload": {
         "psr-4": {
             "Minhyung\\KoreaDays\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Minhyung\\KoreaDays\\Tests\\": "tests/"
         }
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "config": {
         "sort-packages": true
+    },
+    "scripts": {
+        "post-create-project-cmd": [
+            "@php -r \"copy('phpunit.xml.dist', 'phpunit.xml');\""
+        ],
+        "test": "./vendor/bin/phpunit"
     }
 }
