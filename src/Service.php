@@ -6,7 +6,7 @@ use GuzzleHttp\Client;
 
 class Service
 {
-    private ?Client $client;
+    private ?Client $client = null;
 
     public function __construct(
         private string $serviceKey
@@ -40,7 +40,7 @@ class Service
 
         $responseData = json_decode((string) $response->getBody(), true);
 
-        return $responseData['body'];
+        return $responseData['response']['body'];
     }
 
     /**
@@ -69,7 +69,7 @@ class Service
 
         $responseData = json_decode((string) $response->getBody(), true);
 
-        return $responseData['body'];
+        return $responseData['response']['body'];
     }
 
     protected function client(): Client
