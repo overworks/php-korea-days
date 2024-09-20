@@ -40,11 +40,5 @@
             "@php -r \"copy('phpunit.xml.dist', 'phpunit.xml');\""
         ],
         "test": "./vendor/bin/phpunit"
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-main": "0.x-dev",
-            "dev-master": "0.x-dev"
-        }
     }
 }
