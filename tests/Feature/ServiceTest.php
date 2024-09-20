@@ -30,7 +30,7 @@ class ServiceTest extends TestCase
     #[TestWith([2024, 10, 3])]
     public function testHolidays(int $year, int $month, int $count): void
     {
-        $result = $this->service->getHolidays($year, $month);
+        $result = $this->service->getHoliDeInfo($year, $month);
         $this->assertIsArray($result);
         $this->assertArrayHasKey('items', $result);
         $this->assertArrayHasKey('numOfRows', $result);
@@ -44,7 +44,48 @@ class ServiceTest extends TestCase
     #[TestWith([2024, 10, 3])]
     public function testRestDays(int $year, int $month, int $count): void
     {
-        $result = $this->service->getRestDays($year, $month);
+        $result = $this->service->getRestDeInfo($year, $month);
+        $this->assertIsArray($result);
+        $this->assertArrayHasKey('items', $result);
+        $this->assertArrayHasKey('numOfRows', $result);
+        $this->assertArrayHasKey('pageNo', $result);
+        $this->assertArrayHasKey('totalCount', $result);
+        $this->assertEquals($count, $result['totalCount']);
+    }
+
+    #[Test]
+    #[TestWith([2024, 9, 6])]
+    #[TestWith([2024, 10, 14])]
+    public function testAnniversaries(int $year, int $month, int $count): void
+    {
+        $result = $this->service->getAnniversaryInfo($year, $month, 20);
+        $this->assertIsArray($result);
+        $this->assertArrayHasKey('items', $result);
+        $this->assertArrayHasKey('numOfRows', $result);
+        $this->assertArrayHasKey('pageNo', $result);
+        $this->assertArrayHasKey('totalCount', $result);
+        $this->assertEquals($count, $result['totalCount']);
+    }
+
+    #[Test]
+    #[TestWith([2024])]
+    public function test24Divisions(int $year): void
+    {
+        $result = $this->service->get24DivisionsInfo($year, null, 32);
+        $this->assertIsArray($result);
+        $this->assertArrayHasKey('items', $result);
+        $this->assertArrayHasKey('numOfRows', $result);
+        $this->assertArrayHasKey('pageNo', $result);
+        $this->assertArrayHasKey('totalCount', $result);
+        $this->assertEquals(24, $result['totalCount']);
+    }
+
+    #[Test]
+    #[TestWith([2024, 7, 2])]
+    #[TestWith([2024, 8, 2])]
+    public function testSundryDays(int $year, int $month, int $count): void
+    {
+        $result = $this->service->getSundryDayInfo($year, $month);
         $this->assertIsArray($result);
         $this->assertArrayHasKey('items', $result);
         $this->assertArrayHasKey('numOfRows', $result);
