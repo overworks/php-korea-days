@@ -1,7 +1,6 @@
 {
     "name": "minhyung/korea-days",
     "description": "PHP wrapper for Korea Days API",
-    "version": "0.1.0",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -44,8 +43,8 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "0.x",
-            "dev-master": "0.x"
+            "dev-main": "0.x-dev",
+            "dev-master": "0.x-dev"
         }
     }
 }
