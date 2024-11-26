@@ -28,11 +28,14 @@ class ServiceTest extends TestCase
     #[Test]
     #[TestWith([2024, 9, 3])]
     #[TestWith([2024, 10, 3])]
+    #[TestWith([2024, 11, 0])]
+    #[TestWith([2024, 12, 1])]
     public function testHolidays(int $year, int $month, int $count): void
     {
         $result = $this->service->getHoliDeInfo($year, $month);
         $this->assertIsArray($result);
         $this->assertArrayHasKey('items', $result);
+        $this->assertIsArray($result['items']);
         $this->assertArrayHasKey('numOfRows', $result);
         $this->assertArrayHasKey('pageNo', $result);
         $this->assertArrayHasKey('totalCount', $result);
@@ -47,6 +50,7 @@ class ServiceTest extends TestCase
         $result = $this->service->getRestDeInfo($year, $month);
         $this->assertIsArray($result);
         $this->assertArrayHasKey('items', $result);
+        $this->assertIsArray($result['items']);
         $this->assertArrayHasKey('numOfRows', $result);
         $this->assertArrayHasKey('pageNo', $result);
         $this->assertArrayHasKey('totalCount', $result);
@@ -61,6 +65,7 @@ class ServiceTest extends TestCase
         $result = $this->service->getAnniversaryInfo($year, $month, 20);
         $this->assertIsArray($result);
         $this->assertArrayHasKey('items', $result);
+        $this->assertIsArray($result['items']);
         $this->assertArrayHasKey('numOfRows', $result);
         $this->assertArrayHasKey('pageNo', $result);
         $this->assertArrayHasKey('totalCount', $result);
@@ -74,6 +79,7 @@ class ServiceTest extends TestCase
         $result = $this->service->get24DivisionsInfo($year, null, 32);
         $this->assertIsArray($result);
         $this->assertArrayHasKey('items', $result);
+        $this->assertIsArray($result['items']);
         $this->assertArrayHasKey('numOfRows', $result);
         $this->assertArrayHasKey('pageNo', $result);
         $this->assertArrayHasKey('totalCount', $result);
@@ -88,6 +94,7 @@ class ServiceTest extends TestCase
         $result = $this->service->getSundryDayInfo($year, $month);
         $this->assertIsArray($result);
         $this->assertArrayHasKey('items', $result);
+        $this->assertIsArray($result['items']);
         $this->assertArrayHasKey('numOfRows', $result);
         $this->assertArrayHasKey('pageNo', $result);
         $this->assertArrayHasKey('totalCount', $result);

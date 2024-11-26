@@ -98,7 +98,7 @@ class Service
     {
         $params = [
             'serviceKey' => $this->serviceKey,
-            '_type' => 'json',
+            '_type' => 'xml',
             'solYear' => $year,
             'pageNo' => $pageNo,
             'numOfRows' => $numOfRows,
@@ -109,8 +109,25 @@ class Service
 
         $response = $this->client()->get($method, ['query' => $params]);
 
-        $responseData = json_decode((string) $response->getBody(), true);
+        $responseData = simplexml_load_string((string) $response->getBody());
 
-        return $responseData['response']['body'];
+        $header = $responseData->header;
+        $resultCode = (string) $header->resultCode;
+        if ($resultCode !== '00') {
+            throw new ApiException((string) $header->resultMsg, (int) $resultCode);
+        }
+        
+        $body = $responseData->body;
+        $items = [];
+        foreach ($body->items->item as $item) {
+            $items[] = json_decode(json_encode($item), true);
+        }
+
+        return [
+            'items' => $items,
+            'numOfRows' => (int) $body->numOfRows,
+            'pageNo' => (int) $body->pageNo,
+            'totalCount' => (int) $body->totalCount,
+        ];
     }
 }
