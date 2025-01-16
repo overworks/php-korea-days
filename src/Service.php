@@ -2,16 +2,27 @@
 
 namespace Minhyung\KoreaDays;
 
-use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Request;
+use Psr\Http\Client\ClientInterface;
 
 class Service
 {
-    private ?Client $client = null;
+    const BASE_URL = 'http://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/';
 
+    private ?ClientInterface $client = null;
+
+    /**
+     * 생성자
+     * 
+     * @param  string  $serviceKey  공공데이터포털에서 발급받은 서비스 키
+     * @param  \Psr\Http\Client\ClientInterface|null  $client  PSR-18 htt-client 인터페이스
+     * @return void
+     */
     public function __construct(
-        private string $serviceKey
+        private string $serviceKey,
+        ?ClientInterface $client = null
     ) {
-        //
+        $this->client = $client ??= new GuzzleAdapter();
     }
 
     /**
@@ -84,16 +95,6 @@ class Service
         return $this->request('getSundryDayInfo', $year, $month, $pageNo, $numOfRows);
     }
 
-    protected function client(): Client
-    {
-        if (is_null($this->client)) {
-            $this->client = new Client([
-                'base_uri' => 'http://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/',
-            ]);
-        }
-        return $this->client;
-    }
-
     /**
      * 실제 API 호출부
      * 
@@ -117,7 +118,10 @@ class Service
             $params['solMonth'] = str_pad((string) $month, 2, '0', STR_PAD_LEFT);
         }
 
-        $response = $this->client()->get($method, ['query' => $params]);
+        $uri = self::BASE_URL.$method.'?'.http_build_query($params, encoding_type: PHP_QUERY_RFC3986);
+        $request = new Request('GET', $uri);
+
+        $response = $this->client->sendRequest($request);
 
         $responseData = simplexml_load_string((string) $response->getBody());
 
