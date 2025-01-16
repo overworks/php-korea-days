@@ -33,7 +33,6 @@ class ServiceTest extends TestCase
     public function testHolidays(int $year, int $month, int $count): void
     {
         $result = $this->service->getHoliDeInfo($year, $month);
-        $this->assertIsArray($result);
         $this->assertArrayHasKey('items', $result);
         $this->assertIsArray($result['items']);
         $this->assertArrayHasKey('numOfRows', $result);
@@ -48,7 +47,6 @@ class ServiceTest extends TestCase
     public function testRestDays(int $year, int $month, int $count): void
     {
         $result = $this->service->getRestDeInfo($year, $month);
-        $this->assertIsArray($result);
         $this->assertArrayHasKey('items', $result);
         $this->assertIsArray($result['items']);
         $this->assertArrayHasKey('numOfRows', $result);
@@ -63,7 +61,6 @@ class ServiceTest extends TestCase
     public function testAnniversaries(int $year, int $month, int $count): void
     {
         $result = $this->service->getAnniversaryInfo($year, $month, 20);
-        $this->assertIsArray($result);
         $this->assertArrayHasKey('items', $result);
         $this->assertIsArray($result['items']);
         $this->assertArrayHasKey('numOfRows', $result);
@@ -77,7 +74,6 @@ class ServiceTest extends TestCase
     public function test24Divisions(int $year): void
     {
         $result = $this->service->get24DivisionsInfo($year, null, 32);
-        $this->assertIsArray($result);
         $this->assertArrayHasKey('items', $result);
         $this->assertIsArray($result['items']);
         $this->assertArrayHasKey('numOfRows', $result);
@@ -92,7 +88,6 @@ class ServiceTest extends TestCase
     public function testSundryDays(int $year, int $month, int $count): void
     {
         $result = $this->service->getSundryDayInfo($year, $month);
-        $this->assertIsArray($result);
         $this->assertArrayHasKey('items', $result);
         $this->assertIsArray($result['items']);
         $this->assertArrayHasKey('numOfRows', $result);

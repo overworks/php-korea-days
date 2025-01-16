@@ -21,7 +21,7 @@ class Service
      * @param  int|string|null  $month  월
      * @param  int  $pageNo  페이지 번호
      * @param  int  $numOfRows  한 페이지 결과 수
-     * @return array
+     * @return array<string, mixed>
      */
     public function getHoliDeInfo($year, $month = null, int $pageNo = 1, int $numOfRows = 10): array
     {
@@ -35,7 +35,7 @@ class Service
      * @param  int|string|null  $month  월
      * @param  int  $pageNo  페이지 번호
      * @param  int  $numOfRows  한 페이지 결과 수
-     * @return array
+     * @return array<string, mixed>
      */
     public function getRestDeInfo($year, $month = null, int $pageNo = 1, int $numOfRows = 10): array
     {
@@ -49,7 +49,7 @@ class Service
      * @param  int|string|null  $month  월
      * @param  int  $pageNo  페이지 번호
      * @param  int  $numOfRows  한 페이지 결과 수
-     * @return array
+     * @return array<string, mixed>
      */
     public function getAnniversaryInfo($year, $month = null, int $pageNo = 1, int $numOfRows = 10): array
     {
@@ -63,7 +63,7 @@ class Service
      * @param  int|string|null  $month  월
      * @param  int  $pageNo  페이지 번호
      * @param  int  $numOfRows  한 페이지 결과 수
-     * @return array
+     * @return array<string, mixed>
      */
     public function get24DivisionsInfo($year, $month = null, int $pageNo = 1, int $numOfRows = 10): array
     {
@@ -77,7 +77,7 @@ class Service
      * @param  int|string|null  $month  월
      * @param  int  $pageNo  페이지 번호
      * @param  int  $numOfRows  한 페이지 결과 수
-     * @return array
+     * @return array<string, mixed>
      */
     public function getSundryDayInfo($year, $month = null, int $pageNo = 1, int $numOfRows = 10): array
     {
@@ -94,6 +94,16 @@ class Service
         return $this->client;
     }
 
+    /**
+     * 실제 API 호출부
+     * 
+     * @param  string  $method  API 메소드
+     * @param  int|string  $year  연
+     * @param  int|string|null  $month  월
+     * @param  int  $pageNo  페이지 번호
+     * @param  int  $numOfRows  한 페이지 결과 수
+     * @return array<string, mixed>
+     */
     protected function request($method, $year, $month = null, int $pageNo = 1, int $numOfRows = 10)
     {
         $params = [
@@ -104,7 +114,7 @@ class Service
             'numOfRows' => $numOfRows,
         ];
         if ($month) {
-            $params['solMonth'] = str_pad($month, 2, '0', STR_PAD_LEFT);
+            $params['solMonth'] = str_pad((string) $month, 2, '0', STR_PAD_LEFT);
         }
 
         $response = $this->client()->get($method, ['query' => $params]);
