@@ -15,7 +15,6 @@
     },
     "require": {
         "ext-json": "*",
-        "ext-simplexml": "*",
         "guzzlehttp/guzzle": "^7.0",
         "psr/http-client": "^1.0"
     },

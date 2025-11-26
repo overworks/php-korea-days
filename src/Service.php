@@ -109,7 +109,7 @@ class Service
     {
         $params = [
             'serviceKey' => $this->serviceKey,
-            '_type' => 'xml',
+            '_type' => 'json',
             'solYear' => $year,
             'pageNo' => $pageNo,
             'numOfRows' => $numOfRows,
@@ -122,26 +122,30 @@ class Service
         $request = new Request('GET', $uri);
 
         $response = $this->client->sendRequest($request);
+        $statusCode = $response->getStatusCode();
+        if ($statusCode !== 200) {
+            $body = '';
+            $contentType = $response->getHeaderLine('Content-Type');
+            if (stripos($contentType, 'text/plain') !== false) {
+                $body = (string) $response->getBody();
+            }
+            throw new ApiException($body ?: 'API 요청 실패', 0, $statusCode);
+        }
 
-        $responseData = simplexml_load_string((string) $response->getBody());
+        $responseData = json_decode((string) $response->getBody(), true);
 
-        $header = $responseData->header;
-        $resultCode = (string) $header->resultCode;
+        $header = $responseData['response']['header'] ?? [];
+        $resultCode = $header['resultCode'] ?? null;
         if ($resultCode !== '00') {
-            throw new ApiException((string) $header->resultMsg, (int) $resultCode);
+            throw new ApiException($header['resultMsg'], (int) $resultCode, $statusCode);
         }
         
-        $body = $responseData->body;
-        $items = [];
-        foreach ($body->items->item as $item) {
-            $items[] = json_decode(json_encode($item), true);
-        }
-
+        $body = $responseData['response']['body'] ?? [];
         return [
-            'items' => $items,
-            'numOfRows' => (int) $body->numOfRows,
-            'pageNo' => (int) $body->pageNo,
-            'totalCount' => (int) $body->totalCount,
+            'items' => $body['items']['item'] ?? [],
+            'numOfRows' => (int) $body['numOfRows'],
+            'pageNo' => (int) $body['pageNo'],
+            'totalCount' => (int) $body['totalCount'],
         ];
     }
 }
