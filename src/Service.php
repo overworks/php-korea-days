@@ -2,7 +2,8 @@
 
 namespace Minhyung\KoreaDays;
 
-use GuzzleHttp\Psr7\Request;
+use Http\Discovery\Psr17FactoryDiscovery;
+use Http\Discovery\Psr18ClientDiscovery;
 use Psr\Http\Client\ClientInterface;
 
 class Service
@@ -22,7 +23,7 @@ class Service
         private string $serviceKey,
         ?ClientInterface $client = null
     ) {
-        $this->client = $client ??= new GuzzleAdapter();
+        $this->client = $client ??= Psr18ClientDiscovery::find();
     }
 
     /**
@@ -119,7 +120,9 @@ class Service
         }
 
         $uri = self::BASE_URL.$method.'?'.http_build_query($params, encoding_type: PHP_QUERY_RFC3986);
-        $request = new Request('GET', $uri);
+
+        $requestFactory = Psr17FactoryDiscovery::findRequestFactory();
+        $request = $requestFactory->createRequest('GET', $uri);
 
         $response = $this->client->sendRequest($request);
         $statusCode = $response->getStatusCode();
