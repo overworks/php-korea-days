@@ -4,7 +4,7 @@
 
 ## 소개
 
-이 라이브러리는 한국천문연구원의 특일 정보 API를 쉽게 사용할 수 있도록 PHP로 래핑한 것입니다. 
+이 라이브러리는 한국천문연구원의 특일 정보 API를 쉽게 사용할 수 있도록 PHP로 래핑한 것입니다.
 국경일, 공휴일, 기념일, 24절기, 잡절 등 한국의 다양한 특별한 날짜 정보를 조회할 수 있습니다.
 
 ### 주요 기능
@@ -18,7 +18,9 @@
 ## 요구사항
 
 - PHP 8.0 이상
+  - 현재 Composer 설정에는 PHP 버전 제약이 없지만, 이 라이브러리는 PHP 8.0 이상 환경에서만 동작합니다.
 - PSR-18 HTTP 클라이언트 구현체 (예: Guzzle)
+- PSR-17 HTTP Factory 구현체 (예: guzzlehttp/psr7, nyholm/psr7)
 - 공공데이터포털에서 발급받은 API 서비스 키
 
 ## 설치
@@ -29,10 +31,10 @@ Composer를 사용하여 설치할 수 있습니다:
 composer require minhyung/korea-days
 ```
 
-PSR-18 HTTP 클라이언트가 없다면 Guzzle을 함께 설치하세요:
+PSR-18 HTTP 클라이언트와 PSR-17 HTTP Factory가 없다면 Guzzle을 함께 설치하세요:
 
 ```bash
-composer require minhyung/korea-days guzzlehttp/guzzle
+composer require minhyung/korea-days guzzlehttp/guzzle guzzlehttp/psr7
 ```
 
 ## API 키 발급
