@@ -8,7 +8,7 @@ use Psr\Http\Client\ClientInterface;
 
 class Service
 {
-    const BASE_URL = 'http://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/';
+    const BASE_URL = 'https://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/';
 
     private ?ClientInterface $client = null;
 
